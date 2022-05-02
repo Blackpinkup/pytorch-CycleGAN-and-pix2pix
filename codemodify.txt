@@ -1,0 +1,10 @@
+python resize.py
+python test.py --dataroot datasets/vegetable/images --name photo2vangogh_pretrained --model test --no_dropout --preprocess noneo
+python test.py --dataroot datasets/vegetable/simages --name photo2vangogh_pretrained --model test --no_dropout --preprocess noneo
+python test.py --dataroot datasets/vegetable/simages --name photo2monet_pretrained --model test --no_dropout --preprocess noneo
+
+
+python test.py --dataroot datasets/server2 --name photo2vangogh_pretrained --model test --no_dropout --preprocess noneo
+python test.py --dataroot datasets/server2 --name photo2monet_pretrained --model test --no_dropout --preprocess noneo
+python test.py --dataroot datasets/server2 --name photo2ukiyoe_pretrained --model test --no_dropout --preprocess noneo
+python test.py --dataroot datasets/server2 --name photo2cezanne_pretrained --model test --no_dropout --preprocess noneo

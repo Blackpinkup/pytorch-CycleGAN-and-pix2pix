@@ -32,6 +32,11 @@ from data import create_dataset
 from models import create_model
 from util.visualizer import save_images
 from util import html
+import time
+import cv2
+from tqdm import tqdm
+import shutil
+
 
 try:
     import wandb
@@ -40,6 +45,19 @@ except ImportError:
 
 
 if __name__ == '__main__':
+    
+    data_dir = 'E:/DeepLearning/GAN/pytorch-CycleGAN-and-pix2pix-master/datasets/server'
+    # img_list = os.listdir(data_dir)
+    # for img_name in tqdm(img_list):
+    #     img_pth = os.path.join(data_dir, img_name)
+    #     img = cv2.imread(img_pth)
+    #     # new_img_pth = os.path.join(sdata_dir, img_name)
+    #     new_img_pth = img_pth
+    #     crop_img = img[1200:2400,0:1960]
+    #     new_img = cv2.resize(img, (int(img.shape[1] / 2), int(img.shape[0] / 2)), interpolation=cv2.INTER_CUBIC)
+    #     cv2.imwrite(new_img_pth, new_img)
+    
+        
     opt = TestOptions().parse()  # get test options
     # hard-code some parameters for test
     opt.num_threads = 0   # test code only supports num_threads = 0
@@ -67,7 +85,9 @@ if __name__ == '__main__':
     # For [CycleGAN]: It should not affect CycleGAN as CycleGAN uses instancenorm without dropout.
     if opt.eval:
         model.eval()
+    
     for i, data in enumerate(dataset):
+        time1 = time.time()
         if i >= opt.num_test:  # only apply our model to opt.num_test images.
             break
         model.set_input(data)  # unpack data from data loader
@@ -77,4 +97,8 @@ if __name__ == '__main__':
         if i % 5 == 0:  # save images to an HTML file
             print('processing (%04d)-th image... %s' % (i, img_path))
         save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize, use_wandb=opt.use_wandb)
+        time2 = time.time()
+        elapse = time2 - time1
+        print('Processing Time: {}'.format(elapse*1000))
     webpage.save()  # save the HTML
+    
